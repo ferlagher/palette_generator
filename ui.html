@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      box-sizing: border-box;
+      padding: 1rem;
+      color: var(--figma-color-text);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    input {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      width: 8rem;
+      height: 44px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    input::-webkit-color-swatch {
+      border-radius: 22px;
+      border: none;
+    }
+
+    input::-moz-color-swatch {
+      border-radius: 22px;
+      border: none;
+    }
+
+    button {
+      width: 100%;
+      max-width: 300px;
+      margin: auto 0 0;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 0.25rem;
+      font-size: 1rem;
+      text-align: center;
+      cursor: pointer;
+      color: var(--figma-color-text);
+      background-color: var(--figma-color-bg-brand);
+    }
+
+    button:hover {
+      background-color: var(--figma-color-bg-brand-hover);
+    }
+
+    button:active {
+      background-color: var(--figma-color-bg-brand-pressed);
+    }
+  </style>
+
+  <body>
+    <form onsubmit="onSubmit()">
+      <label>
+        Primary
+        <input id="primary" type="color"/>
+      </label>
+      <label>
+        Accent
+        <input id="accent" type="color"/>
+      </label>
+      <label>
+        Cover
+        <input id="cover" type="color"/>
+      </label>
+      <button type="submit">Generate styles</button>
+    </form>
+
+    <script>
+      const inputs = {
+        primary: document.getElementById('primary'),
+        accent: document.getElementById('accent'),
+        cover: document.getElementById('cover'),
+      }
+
+      onmessage = (event) => {
+        console.log("🚀 ~ file: ui.html:35 ~ event:", event)
+        inputs.primary.value = event.data.pluginMessage.primary;
+        inputs.accent.value = event.data.pluginMessage.accent;
+        inputs.cover.value = event.data.pluginMessage.cover;
+      };
+
+      const onSubmit = (e) => {
+        e?.preventDefault();
+        const primary = inputs.primary.value;
+        const accent = inputs.accent.value;
+        const cover = inputs.cover.value;
+
+        parent.postMessage({ pluginMessage: { primary, accent, cover } }, '*');
+      };
+    </script>
+  </body>
+</html>
