@@ -48,7 +48,7 @@ const generatePalette = (color: string, prefix: string) => {
 
   const hsla = (hh: number, ss: number, ll: number, aa: number = 1) => `hsla(${hh}, ${valid(ss)}%, ${valid(ll)}%, ${aa})`;
 
-  const palette = {[prefix]: hsla(h, s, l)};
+  const palette = {[`${prefix}/${prefix}`]: hsla(h, s, l)};
 
   for (let i = 0; i <= 100; i += 10) {
     const sDelta = 10 - (i / 5);
@@ -77,9 +77,9 @@ figma.showUI(__html__, { themeColors: true, width: 230, height: 250 })
 
 const styles = figma.getLocalPaintStyles();
 
-const primaryRGB = styles.find(style => style.name === 'primary')?.paints[0];
-const accentRGB = styles.find(style => style.name === 'accent')?.paints[0];
-const coverRGB = styles.find(style => style.name === 'cover')?.paints[0];
+const primaryRGB = styles.find(style => style.name === 'primary/primary')?.paints[0];
+const accentRGB = styles.find(style => style.name === 'accent/accent')?.paints[0];
+const coverRGB = styles.find(style => style.name === 'cover/cover')?.paints[0];
 
 const primary = primaryRGB?.type === 'SOLID' && primaryRGB.color || {r:0,g:0,b:0};
 const accent = accentRGB?.type === 'SOLID' && accentRGB.color || {r:0,g:0,b:0};
